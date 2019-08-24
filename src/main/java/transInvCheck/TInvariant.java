@@ -11,9 +11,21 @@ public class TInvariant {
     // Pointer to the current transition.
     private int p;
 
-    public void TInvariant(){
-        transitions = new ArrayList<>();
-        p = 0;
+    public TInvariant() {
+        this.transitions = new ArrayList<>();
+        setP(0);
+    }
+
+    public List<Transitions> getTransitions() {
+        return transitions;
+    }
+
+    public int getP(){
+        return p;
+    }
+
+    public void setP(int p) {
+        this.p = p;
     }
 
     public void addAll(List<Transitions> transitions){
@@ -37,10 +49,15 @@ public class TInvariant {
     }
 
     public Transitions getCurrent(){
-        return transitions.get(p);
+        if(transitions.size() > 0 && p>=0) {
+            return transitions.get(p);
+        }else{
+            return null;
+        }
     }
 
     public void reset(){
         p = 0;
     }
+
 }

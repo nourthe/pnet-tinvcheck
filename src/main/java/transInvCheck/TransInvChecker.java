@@ -12,7 +12,7 @@ public class TransInvChecker {
     public static List<Transitions> checkTransitions(List<TInvariant> transInvs, String file){
         List<Transitions> transitionsSequence = FileTransitionsReader.read(file);
 
-        while( transitionsSequence.size() <= 0){
+        while( transitionsSequence.size() > 0){
             TInvariant tInvFound = new TInvariant();
 
             int i = search(transInvs, transitionsSequence, tInvFound);
@@ -38,6 +38,8 @@ public class TransInvChecker {
                         tInv.next();
                     }
                     else{
+                        tInvFound.addAll(tInv.getTransitions());
+                        tInvFound.setP(tInv.getP());
                         return i;
                     }
                 }
@@ -49,12 +51,16 @@ public class TransInvChecker {
     private static void reverseDelete(TInvariant tInvFound, List<Transitions> transitionsSequence, int p) {
         int i = p;
 
-        while ( i != 0 ){
-            if(transitionsSequence.get(i) == tInvFound.getCurrent()){
-                tInvFound.previous(); // I step back
-                transitionsSequence.remove(i); // I delete de Transition corresponding to the invariant
+        while ( i >= 0 ){
+            try {
+                if (transitionsSequence.get(i) == tInvFound.getCurrent()) {
+                    tInvFound.previous(); // I step back
+                    transitionsSequence.remove(i); // I delete de Transition corresponding to the invariant
+                }
+            }catch (IndexOutOfBoundsException e){
+                e.printStackTrace();
             }
-            i++;
+            i--;
         }
     }
 
