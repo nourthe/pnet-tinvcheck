@@ -23,7 +23,12 @@ public class Main {
 		inv2.add(Transitions.T0);
 		inv2.add(Transitions.T1);
 		inv2.add(Transitions.T6);
+		TInvariant inv3 = new TInvariant();
+		inv3.add(Transitions.T0);
+		inv3.add(Transitions.T4);
+		inv3.add(Transitions.T5);
 		list.add(inv1);
 		list.add(inv2);
+		list.add(inv3);
     }
 }

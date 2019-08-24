@@ -11,6 +11,7 @@ public class TransInvChecker {
      */
     public static List<Transitions> checkTransitions(List<TInvariant> transInvs, String file){
         List<Transitions> transitionsSequence = FileTransitionsReader.read(file);
+        System.out.printf("Sequence of %d transitions obtained\n", transitionsSequence.size());
 
         while( transitionsSequence.size() > 0){
             TInvariant tInvFound = new TInvariant();
