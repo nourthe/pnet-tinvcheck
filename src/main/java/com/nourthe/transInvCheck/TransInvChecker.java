@@ -1,26 +1,35 @@
-package transInvCheck;
+package com.nourthe.transInvCheck;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class TransInvChecker {
+
     /**
      * @param transInvs List of Transition Invariants(ArrayLists)
      * @param file Location of the file with the transitions sequence
      * @return
      */
-    public static List<Transitions> checkTransitions(List<TInvariant> transInvs, String file){
-        List<Transitions> transitionsSequence = FileTransitionsReader.read(file);
-        System.out.printf("Sequence of %d transitions obtained\n", transitionsSequence.size());
+    public static <E extends Enum<E>> List<E> checkTransitions(List<TInvariant<E>> transInvs, String file){
+        List<E> transitionsSequence = (List<E>) FileTransitionsReader.read(file);
+        return checkTransitions(transInvs, transitionsSequence);
+    }
 
-        while( transitionsSequence.size() > 0){
-            TInvariant tInvFound = new TInvariant();
+    /**
+     * @param transInvs List of Transition Invariants(ArrayLists)
+     * @param sequence Sequence of transitions to check
+     * @return
+     */
+    public static <E extends Enum<E>> List<E> checkTransitions(List<TInvariant<E>> transInvs, List<E> sequence){
+        System.out.printf("Sequence of %d transitions obtained\n", sequence.size());
 
-            int i = search(transInvs, transitionsSequence, tInvFound);
+        while( sequence.size() > 0){
+            TInvariant<E> tInvFound = new TInvariant<>();
 
-            if (i == -1){ return transitionsSequence; }
+            int i = search(transInvs, sequence, tInvFound);
+
+            if (i == -1){ return sequence; }
             else{
-                reverseDelete(tInvFound, transitionsSequence, i);
+                reverseDelete(tInvFound, sequence, i);
 
                 for (TInvariant tInv : transInvs){
                     tInv.reset();
@@ -28,10 +37,10 @@ public class TransInvChecker {
             }
 
         }
-        return transitionsSequence;
+        return sequence;
     }
 
-    private static int search(List<TInvariant> transInvs, List<Transitions> transitionsSequence, TInvariant tInvFound) {
+    private static <E extends Enum<E>> int search(List<TInvariant<E>> transInvs, List<E> transitionsSequence, TInvariant<E> tInvFound) {
         for (int i=0; i<transitionsSequence.size(); i++){
             for( TInvariant tInv : transInvs){
                 if(transitionsSequence.get(i) == tInv.getCurrent()){
@@ -49,7 +58,7 @@ public class TransInvChecker {
         return -1;
     }
 
-    private static void reverseDelete(TInvariant tInvFound, List<Transitions> transitionsSequence, int p) {
+    private static <E extends Enum<E>> void reverseDelete(TInvariant<E> tInvFound, List<E> transitionsSequence, int p) {
         int i = p;
 
         while ( i >= 0 ){

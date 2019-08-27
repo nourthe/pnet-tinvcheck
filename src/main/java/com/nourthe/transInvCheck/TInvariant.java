@@ -1,12 +1,12 @@
-package transInvCheck;
+package com.nourthe.transInvCheck;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TInvariant {
+public class TInvariant<E extends Enum<E>> {
 
     // List of the Invariant transitions.
-    private List<Transitions> transitions;
+    private List<E> transitions;
 
     // Pointer to the current transition.
     private int p;
@@ -16,7 +16,7 @@ public class TInvariant {
         setP(0);
     }
 
-    public List<Transitions> getTransitions() {
+    public List<E> getTransitions() {
         return transitions;
     }
 
@@ -28,11 +28,11 @@ public class TInvariant {
         this.p = p;
     }
 
-    public void addAll(List<Transitions> transitions){
+    public void addAll(List<E> transitions){
         this.transitions.addAll(transitions);
     }
 
-    public void add(Transitions transition){
+    public void add(E transition){
         this.transitions.add(transition);
     }
 
@@ -48,7 +48,7 @@ public class TInvariant {
         p--;
     }
 
-    public Transitions getCurrent(){
+    public E getCurrent(){
         if(transitions.size() > 0 && p>=0) {
             return transitions.get(p);
         }else{
