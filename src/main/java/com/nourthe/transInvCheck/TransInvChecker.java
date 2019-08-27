@@ -20,6 +20,9 @@ public class TransInvChecker {
      * @return
      */
     public static <E extends Enum<E>> List<E> checkTransitions(List<TInvariant<E>> transInvs, List<E> sequence){
+        if(transInvs.size() == 0){
+            System.out.println("WARNING: There are not transition invariants.");
+        }
         System.out.printf("Sequence of %d transitions obtained\n", sequence.size());
 
         while( sequence.size() > 0){
