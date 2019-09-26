@@ -10,10 +10,13 @@ public class TInvariant<E extends Enum<E>> {
 
     // Pointer to the current transition.
     private int p;
+    // Found counter
+    private int c;
 
     public TInvariant() {
         this.transitions = new ArrayList<>();
         setP(0);
+        c = 0;
     }
 
     public List<E> getTransitions() {
@@ -60,4 +63,7 @@ public class TInvariant<E extends Enum<E>> {
         p = 0;
     }
 
+    public int getCounter(){ return c; }
+
+    public void found(){ c++; }
 }

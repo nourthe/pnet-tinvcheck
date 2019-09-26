@@ -51,6 +51,7 @@ public class TransInvChecker {
                         tInv.next();
                     }
                     else{
+                        tInv.found();
                         tInvFound.addAll(tInv.getTransitions());
                         tInvFound.setP(tInv.getP());
                         return i;
